@@ -1,5 +1,13 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
+import Reduxwrapper from "@/components/reduxwrapper";
+import 'izitoast/dist/css/iziToast.min.css';
+import 'react-datepicker/dist/react-datepicker.css'
+
+import {
+  ClerkProvider
+} from '@clerk/nextjs'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,12 +26,24 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
+    <ClerkProvider>
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            disableTransitionOnChange
+          >
+            <Reduxwrapper>
+
+       
         {children}
+            </Reduxwrapper>
+          </ThemeProvider>
       </body>
     </html>
+    </ClerkProvider>
   );
 }
